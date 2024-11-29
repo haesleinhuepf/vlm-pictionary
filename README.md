@@ -16,6 +16,11 @@ cd vlm-pictionary
 pip install -r requirements.txt
 ```
 
+You also need to configure API keys to access the VLM service providers:
+* `OPENAI_API_KEY`: [OpenAI (gpt-4o)](https://openai.com/blog/openai-api)
+* `ANTHROPIC_API_KEY` [Anthropic (claude)](https://www.anthropic.com/api)
+* `GOOGLE_API_KEY` [Google AI (gemini)](https://ai.google.dev/gemini-api/docs/api-key)
+
 You can then execute it like this:
 ```
 jupyter lab pictionary.ipynb
