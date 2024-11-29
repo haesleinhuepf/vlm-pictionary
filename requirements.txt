@@ -1,0 +1,6 @@
+anthropic
+openai
+google-generativeai
+Pillow
+ipywidgets
+voila
