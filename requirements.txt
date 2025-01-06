@@ -4,3 +4,6 @@ google-generativeai
 Pillow
 ipywidgets
 voila
+ipycanvas
+jupyterlab
+azure-ai-inference

@@ -91,3 +91,51 @@ def prompt_gemini(request, model="gemini-1.5-flash-001", image=None):
         response = client.generate_content(request)
         
     return response.text
+
+
+def prompt_gh_models(message: str, model: str, image=None):
+    """
+    A helper function that sends a message to the Azure VLM endpoints
+    with optional image input and returns the text response.
+    """
+    import os
+    import base64
+    from azure.ai.inference import ChatCompletionsClient
+    from azure.ai.inference.models import (
+        UserMessage,
+        TextContentItem,
+        ImageContentItem,
+        ImageUrl,
+        ImageDetailLevel,
+    )
+    from azure.core.credentials import AzureKeyCredential
+
+    # Azure setup
+    token = os.environ["GITHUB_TOKEN"]
+    endpoint = "https://models.inference.ai.azure.com"
+
+    # Initialize the client
+    client = ChatCompletionsClient(
+        endpoint=endpoint,
+        credential=AzureKeyCredential(token),
+    )
+
+    # Build the message with optional image
+    content_items = [TextContentItem(text=message)]
+    if image:
+        content_items.append(
+            ImageContentItem(image_url={"url": "data:image/png;base64," + image})
+        )
+
+    # Submit the request
+    response = client.complete(
+        messages=[
+            UserMessage(content=content_items)
+        ],
+        model=model,
+        max_tokens=10,
+    )
+
+    # Extract and return the response
+    return response.choices[0].message.content
+
